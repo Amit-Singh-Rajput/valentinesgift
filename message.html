@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            max-width: 420px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            text-align: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .image-container {
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            margin-bottom: 18px;
+            font-size: 30px;
+        }
+
+        p {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .heart {
+            font-size: 34px;
+            margin-top: 18px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="image-container">
+            <img src="/mnt/data/5d200218-6e3b-4886-9f95-e13ac77ec257.JPG" alt="Our Love">
+        </div>
+
+        <div class="content">
+            <h1>Happy Valentines Day My Love</h1>
+            <p>
+                My love, on this beautiful day of Valentine's, my heart finds no words grand enough to measure what you are to me, yet still it tries. 
+                If love were the stars, you would be the whole night sky. If love were the sun, you would be its eternal dawn. 
+                
+                From the hour fate first crossed our paths, you have been the gentle light that guides my wandering soul. 
+                Your kindness heals, your laughter warms, and your love, so pure, so quiet, so boundless, has become the very breath within my chest. 
+                
+                In a world of countless souls, mine shall always seek yours. In joy or storm, in triumph or trial, I am forever yours.
+            </p>
+            <div class="heart">❤</div>
+        </div>
+    </div>
+
+</body>
+</html>

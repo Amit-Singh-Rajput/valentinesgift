@@ -4,30 +4,32 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-// 18 images
+// 18 unique images
 const images = [
-  "/game-photos/1.avif",
-  "/game-photos/2.avif",
-  "/game-photos/3.avif",
-  "/game-photos/4.avif",
-  "/game-photos/5.avif",
-  "/game-photos/6.avif",
-  "/game-photos/7.avif",
-  "/game-photos/8.avif",
-  "/game-photos/9.avif",
-  "/game-photos/10.avif",
-  "/game-photos/11.avif",
-  "/game-photos/12.avif",
-  "/game-photos/13.avif",
-  "/game-photos/14.avif",
-  "/game-photos/15.avif",
-  "/game-photos/16.avif",
-  "/game-photos/17.avif",
-  "/game-photos/18.avif",
+  "/game-photos/1.jpg",
+  "/game-photos/2.jpg",
+  "/game-photos/3.jpg",
+  "/game-photos/4.jpg",
+  "/game-photos/5.jpg",
+  "/game-photos/6.jpg",
+  "/game-photos/7.jpg",
+  "/game-photos/8.jpg",
+  "/game-photos/9.jpg",
+  "/game-photos/10.jpg",
+  "/game-photos/11.jpg",
+  "/game-photos/12.jpg",
+  "/game-photos/13.jpg",
+  "/game-photos/14.jpg",
+  "/game-photos/15.jpg",
+  "/game-photos/16.jpg",
+  "/game-photos/17.jpg",
+  "/game-photos/18.jpg",
 ];
 
 // Create 18 pairs of images (36 images in total)
-const imagePairs = images.flatMap((image) => [image, image]);
+// Pattern: first half has images 1-18, second half has images 18-1 (reversed)
+// This spreads pairs apart for more challenge but keeps it predictable
+const imagePairs = [...images, ...images.slice().reverse()];
 
 const shuffleArray = (array: string[]) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -57,7 +59,8 @@ export default function PhotoPairGame({
   const [selected, setSelected] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [incorrect, setIncorrect] = useState<number[]>([]);
-  const [images] = useState(() => shuffleArray([...imagePairs]));
+  // Keep pairs side by side - no shuffling for easier gameplay
+  const shuffledImages = imagePairs;
 
   const handleClick = async (index: number) => {
     if (selected.length === 2 || matched.includes(index) || selected.includes(index)) return;
@@ -66,7 +69,7 @@ export default function PhotoPairGame({
       const firstIndex = selected[0];
       setSelected((prev) => [...prev, index]);
 
-      if (images[firstIndex] === images[index]) {
+      if (shuffledImages[firstIndex] === shuffledImages[index]) {
         setMatched((prev) => [...prev, firstIndex, index]);
         setSelected([]);
       } else {
@@ -92,7 +95,7 @@ export default function PhotoPairGame({
     <div className="grid grid-cols-9 gap-1 lg:gap-2 max-w-[95vw] mx-auto place-items-center">
       {/* Image preload */}
       <div className="hidden">
-        {images.map((image, i) => (
+        {shuffledImages.map((image, i) => (
           <Image
             key={i}
             src={image}
@@ -109,9 +112,9 @@ export default function PhotoPairGame({
           <motion.div
             key={i}
             className="w-[11vh] h-[11vh] lg:w-20 lg:h-20 relative cursor-pointer"
-            whileHover={{ scale: 1.1 }}
+            whileHover={matched.includes(index) ? {} : { scale: 1.05 }}
             onClick={() => handleClick(index)}
-            style={{ perspective: "1000px" }} // Add perspective for 3D effect
+            style={{ perspective: "1000px" }}
           >
             {/* Back of the card */}
             {!selected.includes(index) && !matched.includes(index) && (
@@ -139,7 +142,7 @@ export default function PhotoPairGame({
                 style={{ backfaceVisibility: "hidden" }}
               >
                 <Image
-                  src={images[index]}
+                  src={shuffledImages[index]}
                   alt={`Imagen ${index + 1}`}
                   fill
                   className="rounded-sm lg:rounded-md object-cover"
@@ -159,7 +162,7 @@ export default function PhotoPairGame({
             )}
           </motion.div>
         ) : (
-          <div key={i} className="w-[11vh] h-[11vh] lg:w-20 lg:h-20" />
+          <div key={i} className="w-[11vh] h-[11vh] lg:w-20 lg:h-20 invisible" />
         ),
       )}
     </div>
